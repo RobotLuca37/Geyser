@@ -41,7 +41,7 @@ import java.util.Set;
 public class DimensionUtils {
 
     // Changes if the above-bedrock Nether building workaround is applied
-    private static int BEDROCK_NETHER_ID = 1;
+    private static int BEDROCK_NETHER_ID = 0;
 
     /**
      * String reference to vanilla Java overworld dimension identifier
@@ -108,7 +108,7 @@ public class DimensionUtils {
         // If the bedrock nether height workaround is enabled, meaning the client is told it's in the end dimension,
         // we check if the player is entering the nether and apply the nether fog to fake the fact that the client
         // thinks they are in the end dimension.
-        if (BEDROCK_NETHER_ID == 2) {
+        if (BEDROCK_NETHER_ID == 1) {
             if (bedrockDimension == BEDROCK_NETHER_ID) {
                 session.sendFog("minecraft:fog_hell");
             } else if (previousDimension == BEDROCK_NETHER_ID) {
@@ -125,8 +125,8 @@ public class DimensionUtils {
      */
     public static int javaToBedrock(String javaDimension) {
         return switch (javaDimension) {
-            case NETHER -> BEDROCK_NETHER_ID;
-            case THE_END -> 2;
+            case NETHER -> 0;
+            case THE_END -> 0;
             default -> 0;
         };
     }
@@ -178,6 +178,6 @@ public class DimensionUtils {
     }
 
     public static boolean isCustomBedrockNetherId() {
-        return BEDROCK_NETHER_ID == 2;
+        return BEDROCK_NETHER_ID == 0;
     }
 }
